@@ -1,0 +1,14 @@
+apiVersion: v1
+kind: Service
+metadata:
+  name: goserver-service
+spec:
+  type: LoadBalancer # NodePort ClusterIP (LoadBalancer the extenal will be created just in a cloud compunting service like AWS)
+  selector:
+    app: goserver
+  ports:
+  - name: goserver-service
+    port: 80 # port of the service
+    targetPort: 8000 # port of the container in the pod (targetPort default 80)
+    protocol: TCP
+    # used for tyep (line six) nodePort: 30001 # range nodePort => 30.000 < nodePort < 32.767

@@ -1,0 +1,67 @@
+VERSIONS OF THE GOSERVER USED OF wesleywillians/hello-go:X
+wesleywillians/hello-go:latest
+wesleywillians/hello-go:v1
+wesleywillians/hello-go:v2
+wesleywillians/hello-go:v3
+wesleywillians/hello-go:v4
+wesleywillians/hello-go:v5
+
+IMPORTANT NOTEs:
+TO USE CONFIGMAP WHEN THERE IS A CHANGE IN THE CONFIG FILE WE MUST RUN THE COMMAND TO READ THE FILE AND MAKE THE DEPLOYMENT AGAIN
+
+TO ENTER IN A POD
+kubectl exec -it nameOfPod -- bash 
+TO SEE LOGS
+kubectl logs nameOfPod (if is a deployment the whole path)
+
+kind get clusters
+kind delete cluster namecluster
+kind create cluster (will create a container with one node server, default name kind)
+
+
+
+commands kubectl => cli responsable to comunicate with kubernetes
+kubectl get nodes
+kubectl config get-clusters
+kubectl config use-context namecluster
+
+THE FOLLOWING COMMAND IS USED TO RUN ALL KIND OF FILES 
+(TO CREATE PODS, REPLICASET, DEPLOYMENT, SERVICES)
+ WHERE SERVICE IS THE SERVER REPONSABLE FOR DOING THE LOADBALANCE FOR EXAMPLE
+kubectl apply -f pathoffile
+kubectl apply -f k8s/pod.yaml
+#### 
+kubectl get pods/pod/po namePod
+kubectl get pod/po namePod
+kubectl get po namePod
+both command above do the same thing, gets the pods
+TO GET A POD FROM A DEPLOYMENT USE
+kubectl get pod nameofdeployment-nameofreplicaset-nameOfPod
+EXAMPLE: kubectl get pod goserver-84b564bb6d-pzwgs
+
+kubectl get replicasets
+
+kubectl get deployment
+
+allow connect to de pod (container)
+kubectl port-forward pod/goserver 8000:80
+
+kubectl delete pod name
+kubectl delete replicaset name
+kubectl delete deployment name
+
+kubectl describe pod podname
+
+HISTORY OF DEPLOYMENT SEE 
+kubectl rollout history deployment nameofdeployment
+kubectl rollout undo deployment nameofdeployment
+
+kubectl rollout undo deployment nameofdeployment --to-revision=numberrevision
+
+CREATING SERVICES TO ALLOW THE PODS TO BE ACCESSED
+kubectl get services name
+kubectl port-forward service/goserver-service 8000:80
+kubectl delete service goserver-service
+
+ACCESS API KUBERNETES 
+kubectl proky --port=8080
