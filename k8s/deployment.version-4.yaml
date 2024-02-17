@@ -16,15 +16,7 @@ spec:
     spec:
       containers:
         - name: goserver
-          image: "wesleywillians/hello-go:v9.6"
-
-          resources:
-            requests:
-              cpu: "0.05" # could be in percentage like '0.4' half of the capacity of a node
-              memory: 20Mi
-            limits:
-              cpu: "0.08" # could be in percentage like '0.5' half of the capacity of a node
-              memory: 25Mi
+          image: "wesleywillians/hello-go:v5.5"
 
           # readinessProbe and livenessProbe they work together
           # readinessProbe verifies if the application is ready to receive request
@@ -34,6 +26,15 @@ spec:
           # if not they will put the application in infinite loop 
           # because before readinessProbe checks the readiness of the application 
           # the livenessProbe will check the heath and will see is not health and will restart the application
+          # using the startProbe we avoid the situation mentioned because startupProbe will check the readiness of the application
+          # after ready it will stop and let the readinessProbe and livenessProbe to manager the application
+
+          startupProbe:
+            httpGet:
+              path: /healthz
+              port: 8000
+            periodSeconds: 4
+            failureThreshold: 30
 
           readinessProbe:
             httpGet:
@@ -43,7 +44,7 @@ spec:
             failureThreshold: 1
             timeoutSeconds: 1
             successThreshold: 1
-            initialDelaySeconds: 10
+            #initialDelaySeconds: 10
 
           livenessProbe:
             httpGet:
@@ -53,7 +54,7 @@ spec:
             failureThreshold: 1
             timeoutSeconds: 1
             successThreshold: 1
-            initialDelaySeconds: 10
+            #initialDelaySeconds: 10
 
 
           envFrom:
@@ -66,20 +67,13 @@ spec:
             - mountPath: "/go/myfamily"
               name: config
               readOnly: true
-            - mountPath: "/go/pvc"
-              name: goserver-volume
       
       volumes:
-        - name: goserver-volume
-          persistentVolumeClaim:
-            claimName: goserver-pvc
-            
         - name: config
           configMap:
             name: configmap-family
             items:
             - key: members
               path: "family.txt"
-        
           
           

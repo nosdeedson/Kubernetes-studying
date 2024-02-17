@@ -16,15 +16,7 @@ spec:
     spec:
       containers:
         - name: goserver
-          image: "wesleywillians/hello-go:v9.6"
-
-          resources:
-            requests:
-              cpu: "0.05" # could be in percentage like '0.4' half of the capacity of a node
-              memory: 20Mi
-            limits:
-              cpu: "0.08" # could be in percentage like '0.5' half of the capacity of a node
-              memory: 25Mi
+          image: "wesleywillians/hello-go:v5.5"
 
           # readinessProbe and livenessProbe they work together
           # readinessProbe verifies if the application is ready to receive request
@@ -66,20 +58,13 @@ spec:
             - mountPath: "/go/myfamily"
               name: config
               readOnly: true
-            - mountPath: "/go/pvc"
-              name: goserver-volume
       
       volumes:
-        - name: goserver-volume
-          persistentVolumeClaim:
-            claimName: goserver-pvc
-            
         - name: config
           configMap:
             name: configmap-family
             items:
             - key: members
               path: "family.txt"
-        
           
           

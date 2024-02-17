@@ -3,7 +3,7 @@ kind: Service
 metadata:
   name: goserver-service
 spec:
-  type: LoadBalancer # NodePort ClusterIP (LoadBalancer the extenal will be created just in a cloud compunting service like AWS)
+  type: ClusterIP # NodePort ClusterIP LoadBalancer (LoadBalancer the extenal will be created just in a cloud compunting service like AWS)
   selector:
     app: goserver
   ports:
