@@ -5,6 +5,7 @@ metadata:
   labels:
     app: goserver
 spec:
+  #namespace: dev
   replicas: 1 # using the value 10 will create 10 pods wich one wiht a container
   selector:
     matchLabels:

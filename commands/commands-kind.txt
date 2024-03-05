@@ -41,6 +41,7 @@ TO APPLY THE CONFIGURATION OF A FILE
 kubectl apply -f pathoffile
 kubectl apply -f k8s/pod.yaml
 kubectl apply -f pathoffile && watch -n1 kubectl get pods => verify the health of the pods
+kubectl apply -f pathoffile -n=nameofnamespace (create a new name for the deployment)
 #### 
 TO UNAPPLY A CONFIGURATION OF A FILE
 kubectl delete -f nameoffile
@@ -80,6 +81,7 @@ kubectl port-forward pod/goserver 8000:80
 kubectl delete pod name
 kubectl delete replicaset name
 kubectl delete deployment name
+kubectl delete deployment name -n=nameofnamespace
 
 kubectl describe pod podname
 
@@ -99,4 +101,23 @@ kubectl proxy --port=8080
 
 to create a pod with fortio to do a stress test
 kubectl run -it fortio --rm --image=fortio/fortio -- load -qps 800 -t 120s -c 70 "http://goserver-service/healthz"
+
+
+NAME SPACE COMMAND
+kubectl get ns (ns = name space)
+kubectl get pods -n=nameofnamespace 
+to create
+kubectl create ns nameofnamespace 
+
+OTHERS COMMAND
+kubectl config view
+kubectl config current-context
+kubectl config set-context nameofcontext --namespace=name --cluster=namecluster --user=nameofuser
+TO GET THE INFORMATION RUN kubectl config current-context
+kubectl config use-context nameofcontext
+
+
+kubectl get serviceaccounts
+
+kubectl api-resources
 
